@@ -34,10 +34,9 @@ const SidebarDropdown = ({
       <button
         onClick={() => setOpen((p) => !p)}
         className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200
-          ${
-            isActiveRoute && !open
-              ? "bg-slate-800 text-white"
-              : "text-slate-300 hover:bg-slate-800"
+          ${isActiveRoute && !open
+            ? "bg-slate-800 text-white"
+            : "text-slate-300 hover:bg-slate-800"
           }
         `}
       >
@@ -102,7 +101,7 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
         {/* ── Header ── */}
         <div className="p-6 border-b border-slate-800 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-white">GTP PDA</h1>
+            <h1 className="text-xl font-bold text-white">BINGOLD ADMIN</h1>
             <p className="text-xs text-slate-400 mt-1">Admin Dashboard</p>
           </div>
           <button
@@ -146,42 +145,42 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
             {(hasModule("User") ||
               hasModule("Role") ||
               hasModule("Permission")) && (
-              <SidebarDropdown
-                icon={Shield}
-                label="Administrator Panel"
-                isActiveRoute={
-                  isLinkActive("/admin/users") ||
-                  isLinkActive("/admin/roles") ||
-                  isLinkActive("/admin/permissions")
-                }
-                maxHeight="max-h-72"
-              >
-                {hasModule("User") && (
-                  <NavLink
-                    to="/admin/users/list"
-                    className={customLinkClass("/admin/users")}
-                  >
-                    <UserCog size={18} /> Manage User
-                  </NavLink>
-                )}
-                {hasModule("Role") && (
-                  <NavLink
-                    to="/admin/roles/list"
-                    className={customLinkClass("/admin/roles")}
-                  >
-                    <UsersRound size={18} /> Manage Role
-                  </NavLink>
-                )}
-                {hasModule("Permission") && (
-                  <NavLink
-                    to="/admin/permissions/list"
-                    className={customLinkClass("/admin/permissions")}
-                  >
-                    <KeyRound size={18} /> Manage Permission
-                  </NavLink>
-                )}
-              </SidebarDropdown>
-            )}
+                <SidebarDropdown
+                  icon={Shield}
+                  label="Administrator Panel"
+                  isActiveRoute={
+                    isLinkActive("/admin/users") ||
+                    isLinkActive("/admin/roles") ||
+                    isLinkActive("/admin/permissions")
+                  }
+                  maxHeight="max-h-72"
+                >
+                  {hasModule("User") && (
+                    <NavLink
+                      to="/admin/users/list"
+                      className={customLinkClass("/admin/users")}
+                    >
+                      <UserCog size={18} /> Manage User
+                    </NavLink>
+                  )}
+                  {hasModule("Role") && (
+                    <NavLink
+                      to="/admin/roles/list"
+                      className={customLinkClass("/admin/roles")}
+                    >
+                      <UsersRound size={18} /> Manage Role
+                    </NavLink>
+                  )}
+                  {hasModule("Permission") && (
+                    <NavLink
+                      to="/admin/permissions/list"
+                      className={customLinkClass("/admin/permissions")}
+                    >
+                      <KeyRound size={18} /> Manage Permission
+                    </NavLink>
+                  )}
+                </SidebarDropdown>
+              )}
           </nav>
         </div>
       </aside>
