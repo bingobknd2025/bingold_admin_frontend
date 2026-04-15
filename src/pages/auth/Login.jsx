@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("work.adityasahgal@gmail.com");
-  const [password, setPassword] = useState("Admin@321");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -73,7 +73,7 @@ const Login = () => {
             Welcome Back
           </h1>
           <p className="text-slate-600">
-            Sign in to your Fleet Manager account
+            Sign in to your Bingold Manager account
           </p>
         </div>
 
@@ -99,7 +99,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-11 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="admin@fleetmanager.com"
+                  placeholder="admin@bingold.com"
                   required
                   data-testid="login-email-input"
                 />

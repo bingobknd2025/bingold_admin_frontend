@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import api from "../../../utils/axios";
 
 const deleteBlog = async (id) => {
-  const response = await api.delete(`/admin/blogs/delete/${id}`);
+  const response = await api.post(`/admin/blogs/delete`, { id });
   return response.data;
 };
 

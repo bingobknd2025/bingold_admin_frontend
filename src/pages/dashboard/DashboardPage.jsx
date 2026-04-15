@@ -19,8 +19,16 @@ const DashboardPage = () => {
   }
 
   const { userManagement } = data || {};
+  const { contentManagement } = data || {};
 
   if (!userManagement) {
+    return (
+      <div className="text-center py-12 text-red-600">
+        No dashboard data available
+      </div>
+    );
+  }
+  if (!contentManagement) {
     return (
       <div className="text-center py-12 text-red-600">
         No dashboard data available
@@ -63,6 +71,16 @@ const DashboardPage = () => {
         <StatCard
           title="Total Permissions"
           value={userManagement?.totalPermissions}
+          icon={<Users className="text-purple-600" size={24} />}
+        />
+        <StatCard
+          title="Total Blogs"
+          value={contentManagement?.totalBlogs}
+          icon={<Users className="text-purple-600" size={24} />}
+        />
+        <StatCard
+          title="Total News"
+          value={contentManagement?.totalNews}
           icon={<Users className="text-purple-600" size={24} />}
         />
       </div>
