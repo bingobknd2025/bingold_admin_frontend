@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-primary {
+    background-color: var(--primary);
+  }
+
+  .bg-primary-dark {
+    background-color: var(--primary-dark);
+  }
+}
+
+@layer base {
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1e3a8a;
+    --primary-extra-dark: #010d34;
+  }
+}
+@import "tailwindcss";
+
+/* 🔹 Custom utilities */
+@layer utilities {
+  /* Background colors */
+  .bg-primary {
+    background-color: var(--primary);
+  }
+
+  .bg-primary-dark {
+    background-color: var(--primary-dark);
+  }
+  .bg-primary-extra-dark {
+    background-color: var(--primary-extra-dark);
+  }
+
+  /* Text colors */
+  .text-primary {
+    color: var(--primary);
+  }
+
+  .text-primary-dark {
+    color: var(--primary-dark);
+  }
+
+  /* Hover variants */
+  .hover\:bg-primary-dark:hover {
+    background-color: var(--primary-dark);
+  }
+
+  .hover\:text-primary-dark:hover {
+    color: var(--primary-dark);
+  }
+}
+
+/* 🔹 Design tokens */
+@layer base {
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    /* IE and Edge */
+    -ms-overflow-style: none;
+    /* Firefox */
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    /* Safari and Chrome */
+    display: none;
+  }
+}
+

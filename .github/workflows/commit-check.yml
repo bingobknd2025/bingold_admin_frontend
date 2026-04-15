@@ -1,0 +1,72 @@
+name: Commit Message Check
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  check-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: |
+          if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            COMMITS=$(git log ${{ github.sha }} -1 --pretty=format:"%H")
+          else
+            COMMITS=$(git log ${{ github.event.before }}..${{ github.sha }} --pretty=format:"%H")
+          fi
+
+          failed=0
+
+          for hash in $COMMITS; do
+            SUBJECT=$(git log -1 --pretty=format:"%s" $hash)
+            BODY=$(git log -1 --pretty=format:"%b" $hash)
+
+            echo "Checking: $SUBJECT"
+
+            # 1. Subject: type(scope): description
+            if ! echo "$SUBJECT" | grep -Piq '^(feat|fix|chore|refactor|docs|test|style|perf|ci|build|revert)\([a-zA-Z0-9_-]+\): .+'; then
+              echo "❌ Invalid subject: $SUBJECT"
+              echo "   Expected: type(scope): description"
+              failed=1
+              continue
+            fi
+
+            # 2. At least one bullet point (- or *) anywhere in body
+            if ! echo "$BODY" | grep -Pq '^\s*[-*]\s+.+'; then
+              echo "❌ No bullet points found in body"
+              echo "   Add at least one line starting with '- ' or '* '"
+              failed=1
+              continue
+            fi
+
+            # 3. Ref: CU-xxx anywhere in body (whitespace tolerant)
+            if ! echo "$BODY" | grep -Piq '^\s*Ref:\s*CU-[a-zA-Z0-9]+\s*$'; then
+              echo "❌ Missing Ref line"
+              echo "   Add: Ref: CU-<ticket-id>"
+              failed=1
+              continue
+            fi
+
+            echo "✅ Valid: $SUBJECT"
+          done
+
+          if [ $failed -ne 0 ]; then
+            echo ""
+            echo "❌ Commit validation failed. Required format:"
+            echo ""
+            echo "  type(scope): short description"
+            echo ""
+            echo "  - what was done"
+            echo "  - why it was done"
+            echo ""
+            echo "  Ref: CU-abc123"
+            exit 1
+          fi
+
+          echo "✅ All commits passed"
