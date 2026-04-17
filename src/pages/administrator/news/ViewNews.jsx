@@ -22,7 +22,7 @@ const ViewNews = () => {
           <div><p className="text-sm text-gray-500">Category</p><p className="font-medium">{item.category || '-'}</p></div>
           <div><p className="text-sm text-gray-500">Status</p>
             <span className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
-              item.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+              item.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
             }`}>
               {item.status}
             </span>
@@ -38,21 +38,21 @@ const ViewNews = () => {
           </div>
         )}
 
-        {item.attch && (
+        {item.image && (
           <div className="mb-4">
-            <p className="text-sm text-gray-500 mb-2">Attachment</p>
-            {item.attch.match(/\.(jpeg|jpg|gif|png|webp)$/) ? (
-                <img src={item.attch} alt="Attachment" className="max-w-md rounded-lg shadow-sm" />
+            <p className="text-sm text-gray-500 mb-2">Image / Attachment</p>
+            {item.image.match(/\.(jpeg|jpg|gif|png|webp)$/) ? (
+                <img src={item.image} alt="Attachment" className="max-w-md rounded-lg shadow-sm" />
             ) : (
-                <a href={item.attch} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">View Attachment</a>
+                <a href={item.image} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">View Attachment</a>
             )}
           </div>
         )}
 
-        <div><p className="text-sm text-gray-500 mb-2">Content / Note</p>
+        <div><p className="text-sm text-gray-500 mb-2">Description / Content</p>
           <div 
             className="bg-gray-50 p-4 rounded-lg ck-content"
-            dangerouslySetInnerHTML={{ __html: item.note || '-' }}
+            dangerouslySetInnerHTML={{ __html: item.description || '-' }}
           />
         </div>
       </div>

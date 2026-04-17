@@ -21,8 +21,8 @@ const BlogForm = () => {
     meta_title: "",
     meta_description: "",
     meta_keyword: "",
-    note: "",
-    attch: "",
+    description: "",
+    image: "",
     cover_image: "",
   });
 
@@ -36,8 +36,8 @@ const BlogForm = () => {
         meta_title: item.meta_title || "",
         meta_description: item.meta_description || "",
         meta_keyword: item.meta_keyword || "",
-        note: item.note || "",
-        attch: item.attch || "",
+        description: item.description || "",
+        image: item.image || "",
         cover_image: item.cover_image || "",
       });
     }
@@ -131,10 +131,10 @@ const BlogForm = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Note / Content</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Description / Content</label>
           <Editor 
-            value={formData.note} 
-            onChange={(data) => setFormData(prev => ({ ...prev, note: data }))} 
+            value={formData.description} 
+            onChange={(data) => setFormData(prev => ({ ...prev, description: data }))} 
             placeholder="Write your content here..." 
           />
         </div>
@@ -153,13 +153,13 @@ const BlogForm = () => {
           </div>
           <div>
             <ImageUpload
-              label="Attachment"
-              name="attch"
+              label="Image / Attachment"
+              name="image"
               icon={ImageIcon}
               onChange={handleImageChange}
             />
-            {formData.attch && (
-              <p className="mt-2 text-xs text-green-600">Current: {formData.attch.split('/').pop()}</p>
+            {formData.image && (
+              <p className="mt-2 text-xs text-green-600">Current: {formData.image.split('/').pop()}</p>
             )}
           </div>
         </div>
