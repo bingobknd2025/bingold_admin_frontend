@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCreateBlog } from "../../../api/administrator/blogs/createBlog";
 import { useUpdateBlog } from "../../../api/administrator/blogs/updateBlog";
@@ -13,35 +13,18 @@ const BlogForm = () => {
   const item = location.state?.item;
   const isEditing = !!item;
 
-  const [formData, setFormData] = useState({
-    title: "",
-    slug: "",
-    category: "",
-    status: "active",
-    meta_title: "",
-    meta_description: "",
-    meta_keyword: "",
-    description: "",
-    image: "",
-    cover_image: "",
-  });
-
-  useEffect(() => {
-    if (isEditing) {
-      setFormData({
-        title: item.title || "",
-        slug: item.slug || "",
-        category: item.category || "",
-        status: item.status || "active",
-        meta_title: item.meta_title || "",
-        meta_description: item.meta_description || "",
-        meta_keyword: item.meta_keyword || "",
-        description: item.description || "",
-        image: item.image || "",
-        cover_image: item.cover_image || "",
-      });
-    }
-  }, [item, isEditing]);
+  const [formData, setFormData] = useState(() => ({
+    title: item?.title || "",
+    slug: item?.slug || "",
+    category: item?.category || "",
+    status: item?.status || "active",
+    meta_title: item?.meta_title || "",
+    meta_description: item?.meta_description || "",
+    meta_keyword: item?.meta_keyword || "",
+    description: item?.note || "",
+    image: item?.attch || "",
+    cover_image: item?.cover_image || "",
+  }));
 
   const { mutate: createItem, isPending: isCreating } = useCreateBlog();
   const { mutate: updateItem, isPending: isUpdating } = useUpdateBlog();
@@ -65,8 +48,10 @@ const BlogForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { description, image, ...rest } = formData;
+    const payload = { ...rest, note: description, attch: image };
     if (isEditing) {
-      updateItem({ id: item.id, data: formData }, {
+      updateItem({ id: item.id, data: payload }, {
         onSuccess: () => {
           toast.success("Blog updated successfully!");
           navigate("/admin/blogs/list");
@@ -74,7 +59,7 @@ const BlogForm = () => {
         onError: (error) => toast.error(error?.response?.data?.message || "Error updating"),
       });
     } else {
-      createItem(formData, {
+      createItem(payload, {
         onSuccess: () => {
           toast.success("Blog created successfully!");
           navigate("/admin/blogs/list");

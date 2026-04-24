@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCreateNews } from "../../../api/administrator/news/createNews";
 import { useUpdateNews } from "../../../api/administrator/news/updateNews";
@@ -13,35 +13,18 @@ const NewsForm = () => {
   const item = location.state?.item;
   const isEditing = !!item;
 
-  const [formData, setFormData] = useState({
-    title: "",
-    slug: "",
-    category: "",
-    status: "active",
-    meta_title: "",
-    meta_description: "",
-    meta_keyword: "",
-    description: "",
-    image: "",
-    cover_image: "",
-  });
-
-  useEffect(() => {
-    if (isEditing) {
-      setFormData({
-        title: item.title || "",
-        slug: item.slug || "",
-        category: item.category || "",
-        status: item.status || "active",
-        meta_title: item.meta_title || "",
-        meta_description: item.meta_description || "",
-        meta_keyword: item.meta_keyword || "",
-        description: item.description || "",
-        image: item.image || "",
-        cover_image: item.cover_image || "",
-      });
-    }
-  }, [item, isEditing]);
+  const [formData, setFormData] = useState(() => ({
+    title: item?.title || "",
+    slug: item?.slug || "",
+    category: item?.category || "",
+    status: item?.status || "active",
+    meta_title: item?.meta_title || "",
+    meta_description: item?.meta_description || "",
+    meta_keyword: item?.meta_keyword || "",
+    description: item?.description || "",
+    image: item?.image || "",
+    cover_image: item?.cover_image || "",
+  }));
 
   const { mutate: createItem, isPending: isCreating } = useCreateNews();
   const { mutate: updateItem, isPending: isUpdating } = useUpdateNews();

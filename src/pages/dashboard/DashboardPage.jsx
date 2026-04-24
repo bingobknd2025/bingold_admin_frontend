@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, Truck, TrendingUp } from "lucide-react";
+import { Users} from "lucide-react";
 import { useDashboard } from "../../api/dashboard/dashboard";
 import StatCard from "./DashboardCard";
 
@@ -81,6 +81,11 @@ const DashboardPage = () => {
         <StatCard
           title="Total News"
           value={contentManagement?.totalNews}
+          icon={<Users className="text-purple-600" size={24} />}
+        />
+         <StatCard
+          title="Total Youtube Videos"
+          value={contentManagement?.totalYoutubeVideos}
           icon={<Users className="text-purple-600" size={24} />}
         />
       </div>

@@ -41,7 +41,7 @@ const ViewNews = () => {
         {item.image && (
           <div className="mb-4">
             <p className="text-sm text-gray-500 mb-2">Image / Attachment</p>
-            {item.image.match(/\.(jpeg|jpg|gif|png|webp)$/) ? (
+            {item.image.match(/\.(jpeg|jpg|gif|png|webp)$/i) ? (
                 <img src={item.image} alt="Attachment" className="max-w-md rounded-lg shadow-sm" />
             ) : (
                 <a href={item.image} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">View Attachment</a>
@@ -50,7 +50,7 @@ const ViewNews = () => {
         )}
 
         <div><p className="text-sm text-gray-500 mb-2">Description / Content</p>
-          <div 
+          <div
             className="bg-gray-50 p-4 rounded-lg ck-content"
             dangerouslySetInnerHTML={{ __html: item.description || '-' }}
           />
