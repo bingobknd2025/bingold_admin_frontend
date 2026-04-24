@@ -30,6 +30,11 @@ import ListNewss from "../pages/administrator/news/ListNewss";
 import NewsForm from "../pages/administrator/news/NewsForm";
 import ViewNews from "../pages/administrator/news/ViewNews";
 
+// Youtube
+import ListYoutubes from "../pages/administrator/youtube/ListYoutubes";
+import YoutubeForm from "../pages/administrator/youtube/YoutubeForm";
+import ViewYoutube from "../pages/administrator/youtube/ViewYoutube";
+
 const dashboardRoutes = (
   <Route
     element={
@@ -75,6 +80,12 @@ const dashboardRoutes = (
     <Route path="/admin/news/create" element={<NewsForm />} />
     <Route path="/admin/news/edit" element={<NewsForm />} />
     <Route path="/admin/news/view" element={<ViewNews />} />
+
+    {/* ================= YOUTUBE ================= */}
+    <Route path="/admin/youtube/list" element={<ListYoutubes />} />
+    <Route path="/admin/youtube/create" element={<YoutubeForm />} />
+    <Route path="/admin/youtube/edit" element={<YoutubeForm />} />
+    <Route path="/admin/youtube/view" element={<ViewYoutube />} />
 
     {/* ================= SYSTEM ================= */}
     <Route path="/admin/access-denied" element={<AccessDenied />} />

@@ -3,6 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   FileText,
   Newspaper,
+  Video,
   LayoutDashboard,
   ShieldCheck,
   Shield,
@@ -133,6 +134,13 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
             {hasModule("News") && (
               <NavLink to="/admin/news/list" className={customLinkClass("/admin/news")}>
                 <Newspaper size={20} /> Manage News
+              </NavLink>
+            )}
+
+            {/* Youtube */}
+            {hasModule("Youtube") && (
+              <NavLink to="/admin/youtube/list" className={customLinkClass("/admin/youtube")}>
+                <Video size={20} /> Manage Youtube
               </NavLink>
             )}
 
