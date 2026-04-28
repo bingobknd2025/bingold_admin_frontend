@@ -35,6 +35,11 @@ import ListYoutubes from "../pages/administrator/youtube/ListYoutubes";
 import YoutubeForm from "../pages/administrator/youtube/YoutubeForm";
 import ViewYoutube from "../pages/administrator/youtube/ViewYoutube";
 
+// Agents
+import ListAgents from "../pages/administrator/agents/ListAgents";
+import AgentForm from "../pages/administrator/agents/AgentForm";
+import ViewAgent from "../pages/administrator/agents/ViewAgent";
+
 const dashboardRoutes = (
   <Route
     element={
@@ -86,6 +91,12 @@ const dashboardRoutes = (
     <Route path="/admin/youtube/create" element={<YoutubeForm />} />
     <Route path="/admin/youtube/edit" element={<YoutubeForm />} />
     <Route path="/admin/youtube/view" element={<ViewYoutube />} />
+
+    {/* ================= AGENTS ================= */}
+    <Route path="/admin/agents/list" element={<ListAgents />} />
+    <Route path="/admin/agents/create" element={<AgentForm />} />
+    <Route path="/admin/agents/edit" element={<AgentForm />} />
+    <Route path="/admin/agents/view" element={<ViewAgent />} />
 
     {/* ================= SYSTEM ================= */}
     <Route path="/admin/access-denied" element={<AccessDenied />} />

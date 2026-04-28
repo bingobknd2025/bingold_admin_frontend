@@ -4,6 +4,7 @@ import {
   FileText,
   Newspaper,
   Video,
+  IdCard,
   LayoutDashboard,
   ShieldCheck,
   Shield,
@@ -141,6 +142,13 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
             {hasModule("Youtube") && (
               <NavLink to="/admin/youtube/list" className={customLinkClass("/admin/youtube")}>
                 <Video size={20} /> Manage Youtube
+              </NavLink>
+            )}
+
+            {/* Agents */}
+            {hasModule("Agent") && (
+              <NavLink to="/admin/agents/list" className={customLinkClass("/admin/agents")}>
+                <IdCard size={20} /> Manage Agents
               </NavLink>
             )}
 
