@@ -11,10 +11,11 @@ const ImageUpload = ({
   hint,
   required = false,
   icon: Icon,
+  initialUrl = "",
 }) => {
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(initialUrl || null);
   const [isDragging, setIsDragging] = useState(false);
-  const [fileName, setFileName] = useState(null);
+  const [fileName, setFileName] = useState(initialUrl ? initialUrl.split("/").pop() : null);
   const [isUploading, setIsUploading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [uploadError, setUploadError] = useState(null);

@@ -1,4 +1,4 @@
-import { Truck, Mail, Lock, EyeOff, Eye } from "lucide-react";
+import { Truck, Mail, Lock, EyeOff, Eye, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAdminLogin } from "../../api/auth/login";
@@ -14,8 +14,22 @@ const Login = () => {
 
   const { mutate: login, isPending: loading, isError, error } = useAdminLogin();
 
+  const passwordRules = [
+    { label: "At least 8 characters", test: (p) => p.length >= 8 },
+    { label: "One uppercase letter", test: (p) => /[A-Z]/.test(p) },
+    { label: "One lowercase letter", test: (p) => /[a-z]/.test(p) },
+    { label: "One number", test: (p) => /\d/.test(p) },
+    { label: "One special character", test: (p) => /[^A-Za-z0-9]/.test(p) },
+  ];
+  const failedRules = passwordRules.filter((r) => !r.test(password));
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (failedRules.length > 0) {
+      toast.error("Please enter a valid password");
+      return;
+    }
 
     // Clear previous session
     sessionStorage.removeItem("accessToken");
@@ -145,6 +159,24 @@ const Login = () => {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
+
+              {password.length > 0 && failedRules.length > 0 && (
+                <ul className="mt-2 space-y-1">
+                  {passwordRules.map((rule) => {
+                    const ok = rule.test(password);
+                    return (
+                      <li
+                        key={rule.label}
+                        className={`text-xs flex items-center gap-1 ${
+                          ok ? "text-emerald-600" : "text-red-500"
+                        }`}
+                      >
+                        <AlertCircle size={12} /> {rule.label}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </div>
 
             <button
@@ -170,7 +202,7 @@ const Login = () => {
 
             <button
               type="button"
-              onClick={() => navigate("/forgot-autheticator")}
+              onClick={() => navigate("/forgot-authenticator")}
               className="text-primary hover:text-primary-dark hover:underline transition"
             >
               Forgot Authenticator

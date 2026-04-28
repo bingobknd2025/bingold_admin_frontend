@@ -13,6 +13,7 @@ const authRoutes = (
     <>
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/forgot-authenticator" element={<ForgotPassword />} />
       <Route path="/forgot-autheticator" element={<ForgotPassword />} />
       <Route path="/reset-authenticator" element={<ResetAuthenticator />} />
 

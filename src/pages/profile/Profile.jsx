@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useProfile } from "../../api/profile/Profile";
 import InfoRow from "../../components/common/InfoRow";
 import SectionCard from "../../components/common/SectionCard";
-import { formatDate } from "../../helper/helper";
+import { formatDate, formatDateOnly } from "../../helper/helper";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -144,7 +144,7 @@ const Profile = () => {
           {/* NEW FIELDS */}
           <InfoRow
             label="Date of Birth"
-            value={formatDate(userData.dob)}
+            value={formatDateOnly(userData.dob)}
             icon={Calendar}
           />
 

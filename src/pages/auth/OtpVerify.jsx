@@ -117,6 +117,7 @@ export default function OtpVerify() {
             onBack={() => navigate("/login")}
             isVerifying={loading}
             isResending={false}
+            hideResend={true}
           />
         </div>
       </div>

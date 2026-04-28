@@ -1,5 +1,5 @@
 import React from "react";
-import { Users} from "lucide-react";
+import { Users, UserCheck, Shield, Key, BookOpen, Newspaper, Youtube } from "lucide-react";
 import { useDashboard } from "../../api/dashboard/dashboard";
 import StatCard from "./DashboardCard";
 
@@ -59,34 +59,34 @@ const DashboardPage = () => {
         <StatCard
           title="Active Users"
           value={userManagement?.activeUsers}
-          icon={<Users className="text-emerald-600" size={24} />}
+          icon={<UserCheck className="text-emerald-600" size={24} />}
         />
 
         <StatCard
           title="Total Roles"
           value={userManagement?.totalRoles}
-          icon={<Users className="text-amber-600" size={24} />}
+          icon={<Shield className="text-amber-600" size={24} />}
         />
 
         <StatCard
           title="Total Permissions"
           value={userManagement?.totalPermissions}
-          icon={<Users className="text-purple-600" size={24} />}
+          icon={<Key className="text-purple-600" size={24} />}
         />
         <StatCard
           title="Total Blogs"
           value={contentManagement?.totalBlogs}
-          icon={<Users className="text-purple-600" size={24} />}
+          icon={<BookOpen className="text-indigo-600" size={24} />}
         />
         <StatCard
           title="Total News"
           value={contentManagement?.totalNews}
-          icon={<Users className="text-purple-600" size={24} />}
+          icon={<Newspaper className="text-rose-600" size={24} />}
         />
          <StatCard
           title="Total Youtube Videos"
           value={contentManagement?.totalYoutubeVideos}
-          icon={<Users className="text-purple-600" size={24} />}
+          icon={<Youtube className="text-red-600" size={24} />}
         />
       </div>
     </div>

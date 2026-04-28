@@ -168,6 +168,9 @@ export default function SecurityPage() {
               setStep(1);
               setError("");
               setOtp("");
+              setCurrentPassword("");
+              setNewPassword("");
+              setConfirmPassword("");
             }}
           />
         )}

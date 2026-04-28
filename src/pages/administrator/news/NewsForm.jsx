@@ -129,6 +129,7 @@ const NewsForm = () => {
               name="cover_image"
               icon={ImageIcon}
               onChange={handleImageChange}
+              initialUrl={formData.cover_image}
             />
             {formData.cover_image && (
               <p className="mt-2 text-xs text-green-600">Current: {formData.cover_image.split('/').pop()}</p>
@@ -140,6 +141,7 @@ const NewsForm = () => {
               name="image"
               icon={ImageIcon}
               onChange={handleImageChange}
+              initialUrl={formData.image}
             />
             {formData.image && (
               <p className="mt-2 text-xs text-green-600">Current: {formData.image.split('/').pop()}</p>

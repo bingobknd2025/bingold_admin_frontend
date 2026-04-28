@@ -4,7 +4,8 @@ import {
   RotateCcw,
   AlertCircle,
   CheckCircle,
-} from "lucide-react"; 
+  Loader2,
+} from "lucide-react";
 import PasswordInput from "./Passwordinput";
 
 export default function Step2Panel({
@@ -18,13 +19,14 @@ export default function Step2Panel({
   onSubmit,
   onResend,
   onBack,
+  isPending = false,
 }) {
   const passwordsMatch =
     confirmPassword.length > 0 && newPassword === confirmPassword;
   const passwordsMismatch =
     confirmPassword.length > 0 && newPassword !== confirmPassword;
   const isDisabled =
-    otp.length < 6 || !newPassword || !confirmPassword || passwordsMismatch;
+    isPending || otp.length < 6 || !newPassword || !confirmPassword || passwordsMismatch;
 
   return (
     <div className="max-w-sm mx-auto">
@@ -108,7 +110,15 @@ export default function Step2Panel({
           disabled={isDisabled}
           className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-medium px-6 py-3 rounded-lg transition-all flex items-center justify-center gap-2"
         >
-          Update Password <ArrowRight size={16} />
+          {isPending ? (
+            <>
+              <Loader2 size={16} className="animate-spin" /> Updating...
+            </>
+          ) : (
+            <>
+              Update Password <ArrowRight size={16} />
+            </>
+          )}
         </button>
 
         <button

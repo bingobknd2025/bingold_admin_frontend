@@ -45,10 +45,21 @@ const ProfileEditPage = () => {
   const { mutate: deleteImage, isPending: isDeleting } = useDeleteImage();
   const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();
 
+  const toDateInputValue = (d) => {
+    if (!d) return "";
+    if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+    const dt = new Date(d);
+    if (isNaN(dt.getTime())) return "";
+    const yyyy = dt.getFullYear();
+    const mm = String(dt.getMonth() + 1).padStart(2, "0");
+    const dd = String(dt.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
   const [formData, setFormData] = useState({
     name: userData?.name || "",
     email: userData?.email || "",
-    dob: userData?.dob || "",
+    dob: toDateInputValue(userData?.dob),
     aadhaar_number: userData?.aadhaar_number || "",
     aadhaar_status: userData?.aadhaar_status || "pending",
     profile_image: userData?.profile_image || "",

@@ -7,6 +7,7 @@ const OtpInput = ({
   onBack,
   isVerifying = false,
   isResending = false,
+  hideResend = false,
 }) => {
   const handleOtpChange = (index, value) => {
     if (value && !/^\d$/.test(value)) return;
@@ -91,17 +92,19 @@ const OtpInput = ({
       </button>
 
       {/* Resend OTP */}
-      <div className="text-center space-y-1">
-        <p className="text-sm text-slate-500">Didn't receive the code?</p>
-        <button
-          type="button"
-          onClick={onResend}
-          disabled={isResending}
-          className="text-sm text-primary hover:text-primary-dark font-medium disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          {isResending ? "Resending..." : "Resend OTP"}
-        </button>
-      </div>
+      {!hideResend && (
+        <div className="text-center space-y-1">
+          <p className="text-sm text-slate-500">Didn't receive the code?</p>
+          <button
+            type="button"
+            onClick={onResend}
+            disabled={isResending}
+            className="text-sm text-primary hover:text-primary-dark font-medium disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isResending ? "Resending..." : "Resend OTP"}
+          </button>
+        </div>
+      )}
     </form>
   );
 };
