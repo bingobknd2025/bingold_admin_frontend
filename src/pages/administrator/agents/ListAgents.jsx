@@ -156,13 +156,13 @@ const ListAgents = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">{item.unique_code}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.role || "-"}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.region || "-"}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-2 whitespace-nowrap">
                       {item.qr_code ? (
                         <a href={item.qr_code} target="_blank" rel="noreferrer">
                           <img
                             src={item.qr_code}
                             alt="QR"
-                            className="w-12 h-12 object-cover rounded border border-gray-200"
+                            className="w-24 h-12 object-cover rounded border border-gray-200"
                           />
                         </a>
                       ) : (
@@ -203,7 +203,7 @@ const ListAgents = () => {
                               <Pencil size={18} />
                             </button>
                           )}
-                          {hasModule("agent.update") && (
+                          {hasModule("agent.regenerate-qr") && (
                             <button
                               className="text-purple-600 hover:text-purple-900 disabled:opacity-50"
                               onClick={() => handleRegenerateQr(item.id)}

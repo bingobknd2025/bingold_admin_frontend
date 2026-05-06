@@ -12,6 +12,7 @@ const ImageUpload = ({
   required = false,
   icon: Icon,
   initialUrl = "",
+  maxSizeMB = 1,
 }) => {
   const [preview, setPreview] = useState(initialUrl || null);
   const [isDragging, setIsDragging] = useState(false);
@@ -50,6 +51,15 @@ const ImageUpload = ({
 
   const processFile = (file) => {
     if (!file) return;
+    if (file.size > maxSizeMB * 1024 * 1024) {
+      setUploadError(`File too large. Max size is ${maxSizeMB}MB`);
+      setPreview(null);
+      setFileName(null);
+      onChange(name, undefined);
+      const input = document.getElementById(name);
+      if (input) input.value = "";
+      return;
+    }
     setFileName(file.name);
     if (file.type.startsWith("image/")) {
       const reader = new FileReader();
@@ -225,7 +235,7 @@ const ImageUpload = ({
             <p className="text-sm font-medium text-gray-700 mb-1">
               Click to upload or drag and drop
             </p>
-            <p className="text-xs text-gray-500">PNG, JPG up to 2MB</p>
+            <p className="text-xs text-gray-500">PNG, JPG up to {maxSizeMB}MB</p>
           </label>
         )}
       </div>
