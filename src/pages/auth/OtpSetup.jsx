@@ -15,6 +15,17 @@ export default function OtpSetup() {
     setOtpData(JSON.parse(storedOtp));
   }, [navigate]);
 
+  // Trap browser back: redirect to /login instead of leaving the auth flow
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      sessionStorage.removeItem("otp_session");
+      navigate("/login", { replace: true });
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [navigate]);
+
   if (!otpData) return null;
   const { qr_code, secret, email } = otpData;
 

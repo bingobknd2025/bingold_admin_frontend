@@ -1,5 +1,5 @@
 import { SquarePen } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useVerifyAuthenticatorCode } from "../../api/auth/verifyAuthenticatorCode";
 import toast from "react-hot-toast";
@@ -27,6 +27,17 @@ export default function OtpVerify() {
 
   const otpSession = JSON.parse(sessionStorage.getItem("otp_session"));
   const email = otpSession?.email;
+
+  // Trap browser back: redirect to /login instead of leaving the auth flow
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      sessionStorage.removeItem("otp_session");
+      navigate("/login", { replace: true });
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [navigate]);
 
   function handleVerify(e) {
     e.preventDefault();

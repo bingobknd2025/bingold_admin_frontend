@@ -1,10 +1,14 @@
 import React from "react";
-import { Users, UserCheck, Shield, Key, BookOpen, Newspaper, Youtube } from "lucide-react";
+import { Users, UserCheck, Shield, Key, BookOpen, Newspaper, Youtube, IdCard } from "lucide-react";
 import { useDashboard } from "../../api/dashboard/dashboard";
+import { useProfile } from "../../api/profile/Profile";
 import StatCard from "./DashboardCard";
+import ContentCharts from "./ContentCharts";
 
 const DashboardPage = () => {
   const { data, isLoading, isError } = useDashboard();
+  const { data: profile } = useProfile();
+  const isSuperAdmin = profile?.role_detail?.name?.toLowerCase().includes("super admin");
 
   if (isLoading) {
     return <div className="text-center py-12">Loading dashboard...</div>;
@@ -50,29 +54,33 @@ const DashboardPage = () => {
 
       {/* STAT CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Total Users"
-          value={userManagement?.totalUsers}
-          icon={<Users className="text-blue-600" size={24} />}
-        />
+        {isSuperAdmin && (
+          <>
+            <StatCard
+              title="Total Users"
+              value={userManagement?.totalUsers}
+              icon={<Users className="text-blue-600" size={24} />}
+            />
 
-        <StatCard
-          title="Active Users"
-          value={userManagement?.activeUsers}
-          icon={<UserCheck className="text-emerald-600" size={24} />}
-        />
+            <StatCard
+              title="Active Users"
+              value={userManagement?.activeUsers}
+              icon={<UserCheck className="text-emerald-600" size={24} />}
+            />
 
-        <StatCard
-          title="Total Roles"
-          value={userManagement?.totalRoles}
-          icon={<Shield className="text-amber-600" size={24} />}
-        />
+            <StatCard
+              title="Total Roles"
+              value={userManagement?.totalRoles}
+              icon={<Shield className="text-amber-600" size={24} />}
+            />
 
-        <StatCard
-          title="Total Permissions"
-          value={userManagement?.totalPermissions}
-          icon={<Key className="text-purple-600" size={24} />}
-        />
+            <StatCard
+              title="Total Permissions"
+              value={userManagement?.totalPermissions}
+              icon={<Key className="text-purple-600" size={24} />}
+            />
+          </>
+        )}
         <StatCard
           title="Total Blogs"
           value={contentManagement?.totalBlogs}
@@ -88,7 +96,15 @@ const DashboardPage = () => {
           value={contentManagement?.totalYoutubeVideos}
           icon={<Youtube className="text-red-600" size={24} />}
         />
+        <StatCard
+          title="Total Agents"
+          value={contentManagement?.totalAgents}
+          icon={<IdCard className="text-emerald-600" size={24} />}
+        />
       </div>
+
+      {/* CHARTS */}
+      <ContentCharts contentManagement={contentManagement} />
     </div>
   );
 };
