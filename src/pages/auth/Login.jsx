@@ -1,4 +1,4 @@
-import { Truck, Mail, Lock, EyeOff, Eye, AlertCircle } from "lucide-react";
+import { Mail, Lock, EyeOff, Eye, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAdminLogin } from "../../api/auth/login";
@@ -80,14 +80,14 @@ const Login = () => {
     <div className="min-h-screen w-full bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-2">
-            <Truck className="text-white" size={32} />
+          <div className="inline-flex items-center justify-center w-32 h-32 rounded-2xl mb-2 overflow-hidden">
+            <img src="/logo192.png" alt="Bingold" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl md:text-2xl lg:text-3xl font-bold text-slate-900 mb-2">
             Welcome Back
           </h1>
           <p className="text-slate-600">
-            Sign in to your Bingold Manager account
+            Sign in to your Bigod Manager account
           </p>
         </div>
 
