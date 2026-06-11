@@ -13,6 +13,11 @@ import {
   KeyRound,
   X,
   ChevronDown,
+  Wallet,
+  Store,
+  QrCode,
+  Receipt,
+  Landmark,
 } from "lucide-react";
 import { useLogout } from "../../hooks/useLogout";
 import { useSelector } from "react-redux";
@@ -73,6 +78,20 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
 
   const hasModule = (moduleName) =>
     reduxModule?.some((m) => m.toLowerCase() === moduleName.toLowerCase());
+
+  const isSuperAdmin = profile?.role_detail?.name
+    ?.toLowerCase()
+    .includes("super admin");
+
+  // BingoPay admin modules (visible to super admin or when the module is granted)
+  const canBingopay = (moduleName) => isSuperAdmin || hasModule(moduleName);
+  const showBingopay =
+    isSuperAdmin ||
+    hasModule("BingopayUser") ||
+    hasModule("Vendor") ||
+    hasModule("PaymentQR") ||
+    hasModule("Payment") ||
+    hasModule("Settlement");
 
   const linkClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200
@@ -197,6 +216,57 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
                   )}
                 </SidebarDropdown>
               )}
+
+            {/* BingoPay */}
+            {showBingopay && (
+              <SidebarDropdown
+                icon={Wallet}
+                label="BingoPay"
+                isActiveRoute={isLinkActive("/admin/bingopay")}
+                maxHeight="max-h-96"
+              >
+                {canBingopay("BingopayUser") && (
+                  <NavLink
+                    to="/admin/bingopay/users/list"
+                    className={customLinkClass("/admin/bingopay/users")}
+                  >
+                    <UsersRound size={18} /> Users
+                  </NavLink>
+                )}
+                {canBingopay("Vendor") && (
+                  <NavLink
+                    to="/admin/bingopay/vendors/list"
+                    className={customLinkClass("/admin/bingopay/vendors")}
+                  >
+                    <Store size={18} /> Vendors
+                  </NavLink>
+                )}
+                {canBingopay("PaymentQR") && (
+                  <NavLink
+                    to="/admin/bingopay/qr/list"
+                    className={customLinkClass("/admin/bingopay/qr")}
+                  >
+                    <QrCode size={18} /> Payment QR
+                  </NavLink>
+                )}
+                {canBingopay("Payment") && (
+                  <NavLink
+                    to="/admin/bingopay/payments/list"
+                    className={customLinkClass("/admin/bingopay/payments")}
+                  >
+                    <Receipt size={18} /> Payments
+                  </NavLink>
+                )}
+                {canBingopay("Settlement") && (
+                  <NavLink
+                    to="/admin/bingopay/settlements/list"
+                    className={customLinkClass("/admin/bingopay/settlements")}
+                  >
+                    <Landmark size={18} /> Settlements
+                  </NavLink>
+                )}
+              </SidebarDropdown>
+            )}
           </nav>
         </div>
       </aside>

@@ -40,6 +40,29 @@ import ListAgents from "../pages/administrator/agents/ListAgents";
 import AgentForm from "../pages/administrator/agents/AgentForm";
 import ViewAgent from "../pages/administrator/agents/ViewAgent";
 
+// BingoPay - Users
+import ListBingopayUsers from "../pages/administrator/bingopay/users/ListBingopayUsers";
+import ViewBingopayUser from "../pages/administrator/bingopay/users/ViewBingopayUser";
+
+// BingoPay - Vendors
+import ListVendors from "../pages/administrator/bingopay/vendors/ListVendors";
+import VendorForm from "../pages/administrator/bingopay/vendors/VendorForm";
+import ViewVendor from "../pages/administrator/bingopay/vendors/ViewVendor";
+
+// BingoPay - QR
+import ListQrCodes from "../pages/administrator/bingopay/qr/ListQrCodes";
+import QrForm from "../pages/administrator/bingopay/qr/QrForm";
+import ViewQrCode from "../pages/administrator/bingopay/qr/ViewQrCode";
+
+// BingoPay - Payments
+import ListPayments from "../pages/administrator/bingopay/payments/ListPayments";
+import ViewPayment from "../pages/administrator/bingopay/payments/ViewPayment";
+
+// BingoPay - Settlements
+import ListSettlements from "../pages/administrator/bingopay/settlements/ListSettlements";
+import SettlementForm from "../pages/administrator/bingopay/settlements/SettlementForm";
+import ViewSettlement from "../pages/administrator/bingopay/settlements/ViewSettlement";
+
 const dashboardRoutes = (
   <Route
     element={
@@ -97,6 +120,30 @@ const dashboardRoutes = (
     <Route path="/admin/agents/create" element={<AgentForm />} />
     <Route path="/admin/agents/edit" element={<AgentForm />} />
     <Route path="/admin/agents/view" element={<ViewAgent />} />
+
+    {/* ============ BINGOPAY - USERS ============ */}
+    <Route path="/admin/bingopay/users/list" element={<ListBingopayUsers />} />
+    <Route path="/admin/bingopay/users/view" element={<ViewBingopayUser />} />
+
+    {/* ============ BINGOPAY - VENDORS ============ */}
+    <Route path="/admin/bingopay/vendors/list" element={<ListVendors />} />
+    <Route path="/admin/bingopay/vendors/create" element={<VendorForm />} />
+    <Route path="/admin/bingopay/vendors/edit" element={<VendorForm />} />
+    <Route path="/admin/bingopay/vendors/view" element={<ViewVendor />} />
+
+    {/* ============ BINGOPAY - QR ============ */}
+    <Route path="/admin/bingopay/qr/list" element={<ListQrCodes />} />
+    <Route path="/admin/bingopay/qr/create" element={<QrForm />} />
+    <Route path="/admin/bingopay/qr/view" element={<ViewQrCode />} />
+
+    {/* ============ BINGOPAY - PAYMENTS ============ */}
+    <Route path="/admin/bingopay/payments/list" element={<ListPayments />} />
+    <Route path="/admin/bingopay/payments/view" element={<ViewPayment />} />
+
+    {/* ============ BINGOPAY - SETTLEMENTS ============ */}
+    <Route path="/admin/bingopay/settlements/list" element={<ListSettlements />} />
+    <Route path="/admin/bingopay/settlements/create" element={<SettlementForm />} />
+    <Route path="/admin/bingopay/settlements/view" element={<ViewSettlement />} />
 
     {/* ================= SYSTEM ================= */}
     <Route path="/admin/access-denied" element={<AccessDenied />} />
