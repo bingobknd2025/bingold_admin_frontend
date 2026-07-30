@@ -40,6 +40,10 @@ import ListAgents from "../pages/administrator/agents/ListAgents";
 import AgentForm from "../pages/administrator/agents/AgentForm";
 import ViewAgent from "../pages/administrator/agents/ViewAgent";
 
+// Investor Registrations (investor-ui signup capture)
+import ListInvestorRegistrations from "../pages/administrator/investorRegistrations/ListInvestorRegistrations";
+import ViewInvestorRegistration from "../pages/administrator/investorRegistrations/ViewInvestorRegistration";
+
 // BingoPay - Users
 import ListBingopayUsers from "../pages/administrator/bingopay/users/ListBingopayUsers";
 import ViewBingopayUser from "../pages/administrator/bingopay/users/ViewBingopayUser";
@@ -120,6 +124,10 @@ const dashboardRoutes = (
     <Route path="/admin/agents/create" element={<AgentForm />} />
     <Route path="/admin/agents/edit" element={<AgentForm />} />
     <Route path="/admin/agents/view" element={<ViewAgent />} />
+
+    {/* ========= INVESTOR REGISTRATIONS ========= */}
+    <Route path="/admin/investor-registrations/list" element={<ListInvestorRegistrations />} />
+    <Route path="/admin/investor-registrations/view" element={<ViewInvestorRegistration />} />
 
     {/* ============ BINGOPAY - USERS ============ */}
     <Route path="/admin/bingopay/users/list" element={<ListBingopayUsers />} />

@@ -18,6 +18,7 @@ import {
   QrCode,
   Receipt,
   Landmark,
+  ClipboardList,
 } from "lucide-react";
 import { useLogout } from "../../hooks/useLogout";
 import { useSelector } from "react-redux";
@@ -168,6 +169,16 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
             {hasModule("Agent") && (
               <NavLink to="/admin/agents/list" className={customLinkClass("/admin/agents")}>
                 <IdCard size={20} /> Manage Agents
+              </NavLink>
+            )}
+
+            {/* Investor Registrations — signups captured from the investor portal */}
+            {(isSuperAdmin || hasModule("Investor Registration")) && (
+              <NavLink
+                to="/admin/investor-registrations/list"
+                className={customLinkClass("/admin/investor-registrations")}
+              >
+                <ClipboardList size={20} /> Investor Registrations
               </NavLink>
             )}
 
