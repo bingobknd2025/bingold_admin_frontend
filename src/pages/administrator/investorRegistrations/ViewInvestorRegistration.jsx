@@ -1,13 +1,17 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
+  Briefcase,
   Building2,
   Calendar,
   ExternalLink,
   FileText,
   Globe,
+  Hash,
+  Link as LinkIcon,
   Mail,
   Phone,
+  Receipt,
   Tag,
   User,
 } from "lucide-react";
@@ -26,6 +30,27 @@ const formatDate = (value) =>
         minute: "2-digit",
       })
     : null;
+
+// Stored as a plain YYYY-MM-DD date, so render it without timezone shifting.
+const formatDateOnly = (value) =>
+  value
+    ? new Date(`${String(value).slice(0, 10)}T00:00:00`).toLocaleDateString(
+        "en-GB",
+        { day: "2-digit", month: "short", year: "numeric" },
+      )
+    : null;
+
+// Values are stored as slugs (private_limited) — show them as words.
+const formatEntityType = (value) =>
+  value
+    ? String(value)
+        .split("_")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ")
+    : null;
+
+const withProtocol = (url) =>
+  /^https?:\/\//i.test(url) ? url : `https://${url}`;
 
 const formatSize = (bytes) => {
   if (!bytes) return null;
@@ -115,12 +140,72 @@ const ViewInvestorRegistration = () => {
       </SectionCard>
 
       {registration?.account_type === "company" && (
+        <SectionCard icon={Building2} title="Company Details">
+          <InfoRow
+            label="Legal Company Name"
+            value={registration?.legal_company_name}
+            icon={Building2}
+          />
+          <InfoRow label="Trading Name / DBA" value={registration?.trading_name} />
+          <InfoRow
+            label="Legal Entity Type"
+            value={formatEntityType(registration?.legal_entity_type)}
+          />
+          <InfoRow
+            label="Country of Incorporation"
+            value={registration?.country_of_incorporation}
+            icon={Globe}
+          />
+          <InfoRow
+            label="Registration Number"
+            value={registration?.registration_number}
+            icon={Hash}
+          />
+          <InfoRow
+            label="Tax Identification Number"
+            value={registration?.tax_identification_number}
+            icon={Receipt}
+          />
+          <InfoRow
+            label="Date of Incorporation"
+            value={formatDateOnly(registration?.date_of_incorporation)}
+            icon={Calendar}
+          />
+          <InfoRow
+            label="Industry"
+            value={formatEntityType(registration?.industry)}
+            icon={Briefcase}
+          />
+          <InfoRow
+            label="Company Website"
+            value={
+              registration?.company_website ? (
+                <a
+                  href={withProtocol(registration.company_website)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  {registration.company_website}
+                </a>
+              ) : null
+            }
+            icon={LinkIcon}
+          />
+          <InfoRow
+            label="Business Description"
+            value={registration?.business_description}
+          />
+        </SectionCard>
+      )}
+
+      {registration?.account_type === "company" && (
         <SectionCard
           icon={FileText}
           title="Company Documents"
           badge={
             <span className="text-xs text-gray-500">
-              {documents.length} of {registration?.required_documents?.length || 3} uploaded
+              {documents.length} attached
             </span>
           }
         >
