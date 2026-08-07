@@ -19,6 +19,7 @@ import {
   Receipt,
   Landmark,
   ClipboardList,
+  MessageSquare,
 } from "lucide-react";
 import { useLogout } from "../../hooks/useLogout";
 import { useSelector } from "react-redux";
@@ -179,6 +180,16 @@ export const Sidebar = ({ isOpen, onClose, profile }) => {
                 className={customLinkClass("/admin/investor-registrations")}
               >
                 <ClipboardList size={20} /> Investor Registrations
+              </NavLink>
+            )}
+
+            {/* Contact Requests — enquiries from the public contact form */}
+            {(isSuperAdmin || hasModule("Contact Request")) && (
+              <NavLink
+                to="/admin/contact-requests/list"
+                className={customLinkClass("/admin/contact-requests")}
+              >
+                <MessageSquare size={20} /> Contact Requests
               </NavLink>
             )}
 
