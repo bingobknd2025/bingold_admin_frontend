@@ -44,6 +44,10 @@ import ViewAgent from "../pages/administrator/agents/ViewAgent";
 import ListInvestorRegistrations from "../pages/administrator/investorRegistrations/ListInvestorRegistrations";
 import ViewInvestorRegistration from "../pages/administrator/investorRegistrations/ViewInvestorRegistration";
 
+// Contact Requests (public contact-us form)
+import ListContactRequests from "../pages/administrator/contactRequests/ListContactRequests";
+import ViewContactRequest from "../pages/administrator/contactRequests/ViewContactRequest";
+
 // BingoPay - Users
 import ListBingopayUsers from "../pages/administrator/bingopay/users/ListBingopayUsers";
 import ViewBingopayUser from "../pages/administrator/bingopay/users/ViewBingopayUser";
@@ -128,6 +132,10 @@ const dashboardRoutes = (
     {/* ========= INVESTOR REGISTRATIONS ========= */}
     <Route path="/admin/investor-registrations/list" element={<ListInvestorRegistrations />} />
     <Route path="/admin/investor-registrations/view" element={<ViewInvestorRegistration />} />
+
+    {/* ============ CONTACT REQUESTS ============ */}
+    <Route path="/admin/contact-requests/list" element={<ListContactRequests />} />
+    <Route path="/admin/contact-requests/view" element={<ViewContactRequest />} />
 
     {/* ============ BINGOPAY - USERS ============ */}
     <Route path="/admin/bingopay/users/list" element={<ListBingopayUsers />} />
