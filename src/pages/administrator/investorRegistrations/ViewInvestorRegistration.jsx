@@ -4,16 +4,21 @@ import {
   Briefcase,
   Building2,
   Calendar,
+  Check,
   ExternalLink,
   FileText,
   Globe,
   Hash,
   Link as LinkIcon,
   Mail,
+  MailCheck,
+  Network,
   Phone,
   Receipt,
+  ShieldCheck,
   Tag,
   User,
+  X,
 } from "lucide-react";
 import { useViewInvestorRegistration } from "../../../api/administrator/investorRegistrations/investorRegistrations";
 import SectionCard from "../../../components/common/SectionCard";
@@ -51,6 +56,29 @@ const formatEntityType = (value) =>
 
 const withProtocol = (url) =>
   /^https?:\/\//i.test(url) ? url : `https://${url}`;
+
+/**
+ * A consent, rendered as given / not given.
+ *
+ * Absent is shown as "Not given" rather than left blank: a registration
+ * captured before the consent checkboxes shipped genuinely has no consent on
+ * record, and that is the honest reading of it.
+ */
+const ConsentValue = ({ given, at, notGivenLabel = "Not given" }) =>
+  given ? (
+    <span className="inline-flex items-center gap-2">
+      <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+        <Check className="h-3 w-3" />
+        Given
+      </span>
+      {at && <span className="text-xs text-gray-500">{formatDate(at)}</span>}
+    </span>
+  ) : (
+    <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+      <X className="h-3 w-3" />
+      {notGivenLabel}
+    </span>
+  );
 
 const formatSize = (bytes) => {
   if (!bytes) return null;
@@ -92,6 +120,14 @@ const ViewInvestorRegistration = () => {
     [registration?.first_name, registration?.last_name]
       .filter(Boolean)
       .join(" ") || null;
+
+  // The consent audit trail — the address it was given from and the exact
+  // wording on screen at the time — rides in meta.consent rather than in its
+  // own columns. Older rows have no meta at all.
+  const consent = registration?.meta?.consent || {};
+  const consentIp = consent.ip || null;
+  const consentText = consent.text || null;
+  const consentVersion = registration?.consent_version || consent.version || null;
 
   return (
     <div className="p-6 space-y-6">
@@ -137,6 +173,67 @@ const ViewInvestorRegistration = () => {
           value={formatDate(registration?.documents_submitted_at)}
           icon={Calendar}
         />
+      </SectionCard>
+
+      {/* What this user agreed to at signup, and when. Shown for every account
+          type — the consents are collected on the signup form itself, not on
+          the company step. */}
+      <SectionCard
+        icon={ShieldCheck}
+        title="Consents"
+        badge={
+          consentVersion ? (
+            <span className="text-xs text-gray-500">
+              Version {consentVersion}
+            </span>
+          ) : null
+        }
+      >
+        <InfoRow
+          label="Terms & Privacy Policy"
+          icon={ShieldCheck}
+          value={
+            <ConsentValue
+              given={Boolean(registration?.terms_accepted)}
+              at={registration?.terms_accepted_at}
+              notGivenLabel="Not on record"
+            />
+          }
+        />
+        <InfoRow
+          label="Marketing Emails"
+          icon={MailCheck}
+          value={
+            <ConsentValue
+              given={Boolean(registration?.marketing_opt_in)}
+              at={registration?.marketing_opt_in_at}
+              notGivenLabel="Opted out"
+            />
+          }
+        />
+        {consentIp && (
+          <InfoRow label="Consent IP" value={consentIp} icon={Network} />
+        )}
+        {consentText?.terms && (
+          <InfoRow
+            label="Terms Wording Shown"
+            value={
+              <span className="font-normal text-gray-600">
+                {consentText.terms}
+              </span>
+            }
+          />
+        )}
+        {consentText?.marketing && (
+          <InfoRow
+            label="Marketing Wording Shown"
+            value={
+              <span className="font-normal text-gray-600">
+                {consentText.marketing}
+              </span>
+            }
+          />
+        )}
       </SectionCard>
 
       {registration?.account_type === "company" && (
