@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, FileText, Search, X } from "lucide-react";
+import { Eye, FileText, MailCheck, MailX, Search, X } from "lucide-react";
 import { useListInvestorRegistrations } from "../../../api/administrator/investorRegistrations/investorRegistrations";
 import Pagination from "../../../components/common/Pagination";
 import RegistrationStatusPill, {
@@ -19,6 +19,21 @@ const formatDate = (value) =>
       })
     : "-";
 
+// Marketing email opt-in, at a glance. Anything other than a recorded opt-in
+// reads as opted out — that is the side to err on for email.
+const MarketingPill = ({ optedIn }) =>
+  optedIn ? (
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
+      <MailCheck className="h-3.5 w-3.5" />
+      Subscribed
+    </span>
+  ) : (
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
+      <MailX className="h-3.5 w-3.5" />
+      No
+    </span>
+  );
+
 const ListInvestorRegistrations = () => {
   const navigate = useNavigate();
   const limit = 10;
@@ -28,6 +43,9 @@ const ListInvestorRegistrations = () => {
   const [search, setSearch] = useState("");
   const [accountType, setAccountType] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  // "" = all, "true" = subscribed, "false" = opted out. Kept as strings so the
+  // select can distinguish "no filter" from "filter on false".
+  const [marketingFilter, setMarketingFilter] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,6 +61,7 @@ const ListInvestorRegistrations = () => {
     ...(search && { search }),
     ...(accountType && { account_type: accountType }),
     ...(statusFilter && { status: statusFilter }),
+    ...(marketingFilter && { marketing_opt_in: marketingFilter }),
   };
 
   const { data, isLoading, isError } = useListInvestorRegistrations(filters);
@@ -115,6 +134,18 @@ const ListInvestorRegistrations = () => {
             </option>
           ))}
         </select>
+        <select
+          value={marketingFilter}
+          onChange={(e) => {
+            setMarketingFilter(e.target.value);
+            setCurrentPage(1);
+          }}
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+        >
+          <option value="">All Marketing Consent</option>
+          <option value="true">Subscribed</option>
+          <option value="false">Not Subscribed</option>
+        </select>
       </div>
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -127,6 +158,7 @@ const ListInvestorRegistrations = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Documents</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marketing</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Signed Up</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -177,6 +209,9 @@ const ListInvestorRegistrations = () => {
                         <span className="text-gray-400">n/a</span>
                       )}
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <MarketingPill optedIn={Boolean(item.marketing_opt_in)} />
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {item.country || "-"}
                     </td>
@@ -201,7 +236,7 @@ const ListInvestorRegistrations = () => {
               ) : (
                 <tr>
                   <td
-                    colSpan="8"
+                    colSpan="9"
                     className="px-6 py-10 text-center text-sm text-gray-500"
                   >
                     No investor registrations found
